@@ -1,5 +1,7 @@
 import './App.css';
 import { useSelector } from 'react-redux'
+import TodoInput from './components/TodoInput';
+
 
 function App() {
   const state = useSelector((state) => ({...state}))
@@ -7,7 +9,7 @@ function App() {
 
   return (
     <div className="App">
-      state
+      <TodoInput />
     </div>
   );
 }
