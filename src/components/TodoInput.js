@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import './TodoInput.css'
 
 const TodoInput = () => {
     const [task, setTask] = useState('')

@@ -1,6 +1,6 @@
 import './App.css';
 import { useSelector } from 'react-redux'
-import TodoInput from './components/TodoInput';
+import TodoList from './components/TodoList';
 
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className="App">
-      <TodoInput />
+      <TodoList />
     </div>
   );
 }
