@@ -3,25 +3,34 @@ import React from 'react'
 import TodoInput from './TodoInput'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { useSelector, useDispatch } from 'react-redux'
-import { completeTodo } from '../redux/action'
+import { completeTodo, addTodo } from '../redux/action'
 import './TodoList.css'
+import Todo from './Todo'
+
 
 const TodoList = () => {
-    const s = useSelector((state) => ({...state.todos}))
+    const stateTodo = useSelector((state) => ({...state.todos}))
+    let dispatch = useDispatch()
 
-
+    const create = (newTodo) => {
+        dispatch(addTodo(newTodo))
+    }
     return (
         <div className='TodoList'>
             <h1>Todo App with React Redux</h1>
-            <TodoInput />
+            <TodoInput createTodo={create} />
             <ul>
                 <TransitionGroup className='todo-list'>
-                    {s.todos && s.todos.map((todo) => {
+                    {stateTodo.todos && stateTodo.todos.map((todo) => {
                         return (
                             <CSSTransition timeout={500} key={todo.id} classNames='todo' >
-                                <h2>
-                                    {todo.task}
-                                </h2>
+                                <Todo 
+                                    key={todo.id}
+                                    id={todo.id}
+                                    task={todo.task}
+                                    completed={todo.completed}
+                                    toggleTodo={() => dispatch(completeTodo(todo))}
+                                />
                             </CSSTransition>
                         )
                     })}
