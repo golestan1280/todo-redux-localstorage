@@ -8,5 +8,14 @@ if(process.env.NODE_ENV === "development") {
     middleware.push(logger)
 }
 
-const store = createStore(rootReducer, applyMiddleware(...middleware))
+const persistedState = localStorage.getItem('reduxState') 
+                       ? JSON.parse(localStorage.getItem('reduxState'))
+                       : {}
+
+const store = createStore(rootReducer, persistedState, applyMiddleware(...middleware))
+
+store.subscribe(()=>{
+    localStorage.setItem('reduxState', JSON.stringify(store.getState()))
+  })
+  
 export default store
