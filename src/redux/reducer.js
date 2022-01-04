@@ -1,9 +1,9 @@
 import * as types from './actionTypes'
 import { v4 as uuidv4 } from "uuid";
 
-
 const initialState = {
-    todos: [{ id:1, task: 'Hello', completed: false }]
+    // todos: [{ id:1, task: 'Hello', completed: false }]
+    todos: []
 }
 
 const todosReducer = (state = initialState, action) => {
@@ -29,6 +29,20 @@ const todosReducer = (state = initialState, action) => {
                 todos: filterTodo
             }
         
+        case types.UPDATE_TODO:
+            const updatedTodos = state.todos.map((todo) => {
+                if(todo.id === action.payload.id){
+                    return {
+                        ...todo, task: action.payload.updatedTask 
+                    }
+                }
+                return todo
+            })
+            return {
+                ...state,
+                todos: updatedTodos
+            }
+
         case types.COMPLETE_TODO:
             console.log('state-todo--: ', state.todos);
             console.log('action.payload**: ', action.payload);

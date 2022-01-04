@@ -1,9 +1,8 @@
 // rafce
 import React from 'react'
 import TodoInput from './TodoInput'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { useSelector, useDispatch } from 'react-redux'
-import { completeTodo, addTodo, removeTodo } from '../redux/action'
+import { completeTodo, addTodo, removeTodo, updateTodo } from '../redux/action'
 import './TodoList.css'
 import Todo from './Todo'
 
@@ -17,15 +16,21 @@ const TodoList = () => {
         dispatch(addTodo(newTodo))
     }
 
+    const update = (id, updatedTask) => {
+        dispatch(updateTodo({id, updatedTask}))
+    }
+
     return (
         <div className='TodoList'>
-            <h1>Todo App with React Redux</h1>
+            <h1>
+                Todo (with React Redux Localstorage)
+            </h1>
             <TodoInput createTodo={create} />
             <ul>
-                <TransitionGroup className='todo-list'>
+                <div className='todo-list'>
                     {stateTodo.todos && stateTodo.todos.map((todo) => {
                         return (
-                            <CSSTransition timeout={500} key={todo.id} classNames='todo' >
+                            <div key={todo.id} className='todo'>
                                 <Todo 
                                     key={todo.id}
                                     id={todo.id}
@@ -33,11 +38,12 @@ const TodoList = () => {
                                     completed={todo.completed}
                                     toggleTodo={() => dispatch(completeTodo(todo))}
                                     removeTodo= {() => dispatch(removeTodo(todo))}
+                                    updateTodo= { update }
                                 />
-                            </CSSTransition>
+                            </div>
                         )
                     })}
-                </TransitionGroup>
+                </div>
             </ul>
         </div>
     )
